@@ -1,7 +1,10 @@
 package entites;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,11 +46,14 @@ public class Ingredient {
 	}
 	
 	
-	@ManyToMany
-	@JoinTable(name="jointure_prod_ing", 
-				joinColumns = @JoinColumn(name="id_ing", referencedColumnName="id_ing"),
-				inverseJoinColumns = @JoinColumn(name="id_prod", referencedColumnName = "id_prod"))
-	private Set<Produit>produitsIng;
+//	@ManyToMany
+//	@JoinTable(name="jointure_prod_ing", 
+//				joinColumns = @JoinColumn(name="id_ing", referencedColumnName="id_ing"),
+//				inverseJoinColumns = @JoinColumn(name="id_prod", referencedColumnName = "id_prod"))
+//	private Set<Produit>produitsIng;
+	
+	@ManyToMany(mappedBy="listeIngredients", cascade=CascadeType.ALL)
+	private List<Produit> ing = new ArrayList<Produit>();
 
 	
 	/**
@@ -75,18 +81,20 @@ public class Ingredient {
 		this.nom = nom;
 	}
 
+
+
 	/**
-	 * @return the produitsIng
+	 * @return the ing
 	 */
-	public Set<Produit> getProduitsIng() {
-		return produitsIng;
+	public List<Produit> getIng() {
+		return ing;
 	}
 
 	/**
-	 * @param produitsIng the produitsIng to set
+	 * @param ing the ing to set
 	 */
-	public void setProduitsIng(Set<Produit> produitsIng) {
-		this.produitsIng = produitsIng;
+	public void setIng(List<Produit> ing) {
+		this.ing = ing;
 	}
 
 	@Override

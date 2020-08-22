@@ -1,7 +1,10 @@
 package entites;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -44,11 +47,14 @@ public class Additif {
 	}
 	
 	
-	@ManyToMany
-	@JoinTable(name="jointure_prod_add", 
-				joinColumns = @JoinColumn(name="id_add", referencedColumnName="id_add"),
-				inverseJoinColumns = @JoinColumn(name="id_prod", referencedColumnName = "id_prod"))
-	private Set<Produit>produitsAdd;
+//	@ManyToMany
+//	@JoinTable(name="jointure_prod_add", 
+//				joinColumns = @JoinColumn(name="id_add", referencedColumnName="id_add"),
+//				inverseJoinColumns = @JoinColumn(name="id_prod", referencedColumnName = "id_prod"))
+//	private Set<Produit>produitsAdd;
+	
+	@ManyToMany(mappedBy="listeAdditifs", cascade=CascadeType.ALL)
+	private List<Produit> add = new ArrayList<Produit>();
 
 	/**
 	 * @return the id_add
@@ -77,23 +83,23 @@ public class Additif {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-
-	/**
-	 * @return the produitsAdd
-	 */
-	public Set<Produit> getProduitsAdd() {
-		return produitsAdd;
-	}
-
-
-	/**
-	 * @param produitsAdd the produitsAdd to set
-	 */
-	public void setProduitsAdd(Set<Produit> produitsAdd) {
-		this.produitsAdd = produitsAdd;
-	}
 	
 	
+
+	/**
+	 * @return the add
+	 */
+	public List<Produit> getAdd() {
+		return add;
+	}
+
+	/**
+	 * @param add the add to set
+	 */
+	public void setAdd(List<Produit> add) {
+		this.add = add;
+	}
+
 	@Override
 	public String toString() {
 		return "Additif [id_add=" + id_add + ", nom=" + nom + "]";

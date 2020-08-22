@@ -57,16 +57,23 @@ public class ProduitDaoJpa implements ProduitDao {
 			EntityManager em = factory.createEntityManager();
 
 			Categorie categorie = produit.getCategorie();
+			//System.out.println("test categorie" + categorie.toString());
 			if (categorie != null) {
+				//System.out.println("Cateforie not null");
 				CategorieDaoJpa cat = new CategorieDaoJpa();
 				categorie = cat.getCategorieIdByName(categorie.getNom());
 				int id_cat = categorie.getId_cat();
+				//System.out.println("Categorie : " + categorie.toString());
+				
 				
 				if (id_cat == 0) {
-					cat.insert(categorie);
-					categorie = cat.getCategorieIdByName(categorie.getNom());
+					cat.insert(produit.getCategorie());
+					categorie = cat.getCategorieIdByName(produit.getCategorie().getNom());
+					//System.out.println("New Categroie :" + categorie.toString());
 				}
 				produit.setCategorie(categorie);
+				//System.out.println("New Oroduit : " + produit.toString());
+				
 			}
 
 		
@@ -79,21 +86,23 @@ public class ProduitDaoJpa implements ProduitDao {
 				int id_marque = marque.getId_marque();
 				
 				if (id_marque == 0) {
-					mar.insert(marque);
-					marque = mar.getMarqueIdByName(marque.getNom());
+					System.out.println("Marque : " + produit.getMarque().toString());
+					mar.insert(produit.getMarque());
+					marque = mar.getMarqueIdByName(produit.getMarque().getNom());
 				}
 				produit.setMarque(marque);
 			}
 
 			
 
-
+			System.out.println(produit.toString());
 
 			int id_prod = this.getProduitIdByName(produit.getNom()).getId_prod();
+			System.out.println("Id produit :" + id_prod);
 
 			if (id_prod == 0) {
 
-
+				System.out.println("entrée dans la boucle");
 
 				IngredientDaoJpa ing = new IngredientDaoJpa();
 				List<Ingredient> ingredients = produit.getListeIngredients();
@@ -145,6 +154,8 @@ public class ProduitDaoJpa implements ProduitDao {
 					}
 					produit.setListeAdditifs(additifs);
 				}
+				
+				System.out.println(produit.toString() + "avant insert");
 				
 				if (em != null) {
 					System.out.println(produit.toString());

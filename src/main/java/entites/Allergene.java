@@ -1,7 +1,10 @@
 package entites;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,11 +44,14 @@ public class Allergene {
 		
 	}
 	
-	@ManyToMany
-	@JoinTable(name="jointure_prod_all", 
-				joinColumns = @JoinColumn(name="id_all", referencedColumnName="id_all"),
-				inverseJoinColumns = @JoinColumn(name="id_prod", referencedColumnName = "id_prod"))
-	private Set<Produit>produitsAll;
+//	@ManyToMany
+//	@JoinTable(name="jointure_prod_all", 
+//				joinColumns = @JoinColumn(name="id_all", referencedColumnName="id_all"),
+//				inverseJoinColumns = @JoinColumn(name="id_prod", referencedColumnName = "id_prod"))
+//	private Set<Produit>produitsAll;
+	
+	@ManyToMany(mappedBy="listeAllergnes", cascade=CascadeType.ALL)
+	private List<Produit> all = new ArrayList<Produit>();
 
 	/**
 	 * @return the id_all
@@ -75,18 +81,19 @@ public class Allergene {
 		this.nom = nom;
 	}
 
+
 	/**
-	 * @return the produitsAll
+	 * @return the all
 	 */
-	public Set<Produit> getProduitsAll() {
-		return produitsAll;
+	public List<Produit> getAll() {
+		return all;
 	}
 
 	/**
-	 * @param produitsAll the produitsAll to set
+	 * @param all the all to set
 	 */
-	public void setProduitsAll(Set<Produit> produitsAll) {
-		this.produitsAll = produitsAll;
+	public void setAll(List<Produit> all) {
+		this.all = all;
 	}
 
 	@Override

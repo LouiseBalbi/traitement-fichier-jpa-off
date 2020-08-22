@@ -2,6 +2,7 @@ package entites;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -104,14 +106,35 @@ public class Produit {
 	@Column(name = "huileDePalme", nullable = true)
 	private boolean huileDePalme;
 	
-	@ManyToMany(mappedBy="produitsAll")
-	private List<Allergene> listeAllergnes = new ArrayList<Allergene>();
 	
-	@ManyToMany(mappedBy="produitsAdd")
-	private List<Additif> listeAdditifs = new ArrayList<Additif>();
+	@ManyToMany
+	@JoinTable(name="jointure_prod_ing", 
+				joinColumns = @JoinColumn(name="id_prod", referencedColumnName="id_prod"),
+				inverseJoinColumns = @JoinColumn(name="id_ing", referencedColumnName = "id_ing"))
+	private List<Ingredient>listeIngredients;
 	
-	@ManyToMany(mappedBy="produitsIng")
-	private List<Ingredient> listeIngredients = new ArrayList<Ingredient>();
+	
+	@ManyToMany
+	@JoinTable(name="jointure_prod_add", 
+				joinColumns = @JoinColumn(name="id_prod", referencedColumnName="id_prod"),
+				inverseJoinColumns = @JoinColumn(name="id_add", referencedColumnName = "id_add"))
+	private List<Additif>listeAdditifs;
+	
+	
+	@ManyToMany
+	@JoinTable(name="jointure_prod_all", 
+				joinColumns = @JoinColumn(name="id_prod", referencedColumnName="id_prod"),
+				inverseJoinColumns = @JoinColumn(name="id_all", referencedColumnName = "id_all"))
+	private List<Allergene>listeAllergnes;
+	
+//	@ManyToMany(mappedBy="produitsAll")
+//	private List<Allergene> listeAllergnes = new ArrayList<Allergene>();
+//	
+//	@ManyToMany(mappedBy="produitsAdd")
+//	private List<Additif> listeAdditifs = new ArrayList<Additif>();
+//	
+//	@ManyToMany(mappedBy="produitsIng")
+//	private List<Ingredient> listeIngredients = new ArrayList<Ingredient>();
 	/**
 	 * @param id_prod
 	 * @param categorie
@@ -532,41 +555,49 @@ public class Produit {
 	public void setHuileDePalme(boolean huileDePalme) {
 		this.huileDePalme = huileDePalme;
 	}
-	/**
-	 * @return the listeAllergnes
-	 */
-	public List<Allergene> getListeAllergnes() {
-		return listeAllergnes;
-	}
-	/**
-	 * @param listeAllergnes the listeAllergnes to set
-	 */
-	public void setListeAllergnes(List<Allergene> listeAllergnes) {
-		this.listeAllergnes = listeAllergnes;
-	}
-	/**
-	 * @return the listeAdditifs
-	 */
-	public List<Additif> getListeAdditifs() {
-		return listeAdditifs;
-	}
-	/**
-	 * @param listeAdditifs the listeAdditifs to set
-	 */
-	public void setListeAdditifs(List<Additif> listeAdditifs) {
-		this.listeAdditifs = listeAdditifs;
-	}
+
+
+
 	/**
 	 * @return the listeIngredients
 	 */
 	public List<Ingredient> getListeIngredients() {
 		return listeIngredients;
 	}
+
 	/**
 	 * @param listeIngredients the listeIngredients to set
 	 */
 	public void setListeIngredients(List<Ingredient> listeIngredients) {
 		this.listeIngredients = listeIngredients;
+	}
+
+	/**
+	 * @return the listeAdditifs
+	 */
+	public List<Additif> getListeAdditifs() {
+		return listeAdditifs;
+	}
+
+	/**
+	 * @param listeAdditifs the listeAdditifs to set
+	 */
+	public void setListeAdditifs(List<Additif> listeAdditifs) {
+		this.listeAdditifs = listeAdditifs;
+	}
+
+	/**
+	 * @return the listeAllergnes
+	 */
+	public List<Allergene> getListeAllergnes() {
+		return listeAllergnes;
+	}
+
+	/**
+	 * @param listeAllergnes the listeAllergnes to set
+	 */
+	public void setListeAllergnes(List<Allergene> listeAllergnes) {
+		this.listeAllergnes = listeAllergnes;
 	}
 
 	@Override
